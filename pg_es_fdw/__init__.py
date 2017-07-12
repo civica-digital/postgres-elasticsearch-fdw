@@ -223,7 +223,7 @@ class ElasticsearchFDW(ForeignDataWrapper):
                 [
                     (column, self._convert_response_column(column, row_data))
                     for column in columns
-                    if column in row_data['_source'] or column == self.rowid_column or column == self.score_column
+                    if column.split("__")[0] in row_data['_source'] or column == self.rowid_column or column == self.score_column
                 ]
                 +
                 [
@@ -233,7 +233,7 @@ class ElasticsearchFDW(ForeignDataWrapper):
         return {
             column: self._convert_response_column(column, row_data)
             for column in columns
-            if column in row_data['_source'] or column == self.rowid_column or column == self.score_column
+            if column.split("__")[0] in row_data['_source'] or column == self.rowid_column or column == self.score_column
         }
 
     def _convert_response_column(self, column, row_data):
