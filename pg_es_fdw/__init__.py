@@ -241,4 +241,8 @@ class ElasticsearchFDW(ForeignDataWrapper):
             return row_data['_id']
         if column == self.score_column:
             return row_data['_score']
+        if "__" in column:
+            name_field = column.split("__")[0]
+            name_subfield = column.split("__")[1]
+            return row_data[name_field][name_subfield]
         return row_data['_source'][column]
