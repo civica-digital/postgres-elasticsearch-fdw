@@ -244,5 +244,5 @@ class ElasticsearchFDW(ForeignDataWrapper):
         if "__" in column:
             name_field = column.split("__")[0]
             name_subfield = column.split("__")[1]
-            return row_data['_source'][name_field][name_subfield]
-        return row_data['_source'][column]
+            return row_data['_source'][name_field][name_subfield].replace("+00:00")
+        return row_data['_source'][column].replace("+00:00","")
